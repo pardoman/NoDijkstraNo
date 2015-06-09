@@ -15,9 +15,9 @@ import java.io.*;
  */
 class DijkstraConnection
 {
-	public int nodeA;
-	public int nodeB;
-	public int distance;
+    public int nodeA;
+    public int nodeB;
+    public int distance;
     
     public boolean hasNodes(int node1, int node2) {
         return (nodeA == node1 && nodeB == node2) || 
@@ -33,24 +33,24 @@ class DijkstraGraph
     // When there is no link between 2 nodes (infinite distance)
     public static int NO_CONNECTION = -1;
     
-	public int nextNodeId = 1;
-	public ArrayList<DijkstraConnection> connections = new ArrayList<DijkstraConnection>();
+    public int nextNodeId = 1;
+    public ArrayList<DijkstraConnection> connections = new ArrayList<DijkstraConnection>();
     public ArrayList<Integer> nodeIds = new ArrayList<Integer>();
-	
-	public int createNode() {
-		int requestedNodeId = nextNodeId;
+    
+    public int createNode() {
+        int requestedNodeId = nextNodeId;
         nodeIds.add(requestedNodeId); // Autoboxing. Ugh.
-		nextNodeId += 1;
-		return requestedNodeId;
-	}
-	public void createLink(int nodeA, int nodeB, int distance) {
-		// TODO: Check nodeA and nodeB are valid
-		DijkstraConnection conn = new DijkstraConnection();
-		conn.nodeA = nodeA;
-		conn.nodeB = nodeB;
-		conn.distance = distance;
-		connections.add(conn);
-	}
+        nextNodeId += 1;
+        return requestedNodeId;
+    }
+    public void createLink(int nodeA, int nodeB, int distance) {
+        // TODO: Check nodeA and nodeB are valid
+        DijkstraConnection conn = new DijkstraConnection();
+        conn.nodeA = nodeA;
+        conn.nodeB = nodeB;
+        conn.distance = distance;
+        connections.add(conn);
+    }
     
     // Helper methods used by the walker. 
     // Lazy evaluation to avoid bookkeeping (and because I don't want to code that now).
@@ -108,7 +108,7 @@ class DijkstraGraph
  */
 class DijkstraPath
 {
-	public ArrayList<Integer> nodes = new ArrayList<Integer>();
+    public ArrayList<Integer> nodes = new ArrayList<Integer>();
     
     public int startNodeId;
     public int endNodeId;
@@ -150,16 +150,16 @@ class DijkstraPath
  */
 class DijkstraWalker
 {
-	// Inner class used for bookkeeping
-	class VisitData
-	{
-		int distanceSoFar;
+    // Inner class used for bookkeeping
+    class VisitData
+    {
+        int distanceSoFar;
         int currentNodeId;
         int fromNodeId;
-	}
-	
-	public DijkstraPath getShortestPath(DijkstraGraph graph, int nodeA, int nodeB) 
-	{
+    }
+    
+    public DijkstraPath getShortestPath(DijkstraGraph graph, int nodeA, int nodeB) 
+    {
         // Initialize each node as "not visited"
         HashMap<Integer, VisitData> bookkeeping = new HashMap();
         ArrayList<Integer> allNodeIds = graph.getNodeIds();
@@ -177,13 +177,13 @@ class DijkstraWalker
         dd.distanceSoFar = 0;
         
         // Initialize queue with nodeA
-		LinkedList<Integer> queue = new LinkedList<Integer>();
-		queue.add(nodeA);
-		
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        queue.add(nodeA);
+        
         // Iterative approach because recursion is for losers (not really)
-		while (!queue.isEmpty())
-		{
-			int currNode = queue.removeFirst();
+        while (!queue.isEmpty())
+        {
+            int currNode = queue.removeFirst();
             VisitData currVisit = bookkeeping.get(currNode);
             LinkedList<Integer> neighbors = graph.getNeighbors(currNode);
             
@@ -205,7 +205,7 @@ class DijkstraWalker
                     queue.addLast(nextNodeId);
                 }
             }
-		}
+        }
         
         // Queue is empty now *sad panda*, time to check whether the end node was reached
         VisitData endStep = bookkeeping.get(nodeB);
@@ -236,50 +236,50 @@ class DijkstraWalker
         Collections.reverse(resultPath.nodes);
         
         return resultPath;
-	}
+    }
 }
 
 /* Name of the class has to be "Main" only if the class is public. */
 class Ideone
 {
-	public static void main (String[] args) throws java.lang.Exception
-	{
-		// Create nodes
+    public static void main (String[] args) throws java.lang.Exception
+    {
+        // Create nodes
         // Visual representation of the graph being built: http://snag.gy/YwhCr.jpg
-		System.out.println("1. Create nodes");
-		DijkstraGraph graph = new DijkstraGraph();
-		int node1 = graph.createNode();
-		int node2 = graph.createNode();
-		int node3 = graph.createNode();
-		int node4 = graph.createNode();
-		int node5 = graph.createNode();
-		int node6 = graph.createNode();
-		int node7 = graph.createNode();
+        System.out.println("1. Create nodes");
+        DijkstraGraph graph = new DijkstraGraph();
+        int node1 = graph.createNode();
+        int node2 = graph.createNode();
+        int node3 = graph.createNode();
+        int node4 = graph.createNode();
+        int node5 = graph.createNode();
+        int node6 = graph.createNode();
+        int node7 = graph.createNode();
         // These next nodes will not connect to the previous ones
         int node8 = graph.createNode();
         int node9 = graph.createNode();
         int nodeA = graph.createNode();
         
-		
-		// Create links (nodeA, nodeB, distance)
-		System.out.println("2. Create connections");
-		graph.createLink(node1, node2, 20);
-		graph.createLink(node1, node6, 99);
-		graph.createLink(node2, node3, 20);
-		graph.createLink(node2, node5, 10);
-		graph.createLink(node3, node4, 30);
-		graph.createLink(node5, node4, 30);
-		graph.createLink(node4, node6,  5);
-		graph.createLink(node1, node7,  5);
-		graph.createLink(node7, node2,  5);
+        
+        // Create links (nodeA, nodeB, distance)
+        System.out.println("2. Create connections");
+        graph.createLink(node1, node2, 20);
+        graph.createLink(node1, node6, 99);
+        graph.createLink(node2, node3, 20);
+        graph.createLink(node2, node5, 10);
+        graph.createLink(node3, node4, 30);
+        graph.createLink(node5, node4, 30);
+        graph.createLink(node4, node6,  5);
+        graph.createLink(node1, node7,  5);
+        graph.createLink(node7, node2,  5);
         // Connect the "extra" nodes
         graph.createLink(node8, node9,  21);
         graph.createLink(node9, nodeA,  21);
-		
-		// Walk the graph and get the shortest distance
-		System.out.println("3. Walk the graph");
-		DijkstraWalker walker = new DijkstraWalker();
-		
+        
+        // Walk the graph and get the shortest distance
+        System.out.println("3. Walk the graph");
+        DijkstraWalker walker = new DijkstraWalker();
+        
         // Result should be [1, 7, 2, 5, 4, 6]. Total distance: 55
         DijkstraPath path = walker.getShortestPath(graph, node1, node6);
         path.printResult();
@@ -304,7 +304,7 @@ class Ideone
         path = walker.getShortestPath(graph, node8, nodeA);
         path.printResult();
         
-		System.out.println("THE END.");
+        System.out.println("THE END.");
         System.out.println("So long, and thanks for all the fish!");
-	}
+    }
 }
